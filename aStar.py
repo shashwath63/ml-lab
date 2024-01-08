@@ -5,13 +5,11 @@ def aStarAlgo(start_node, stop_node):
     parents = {} # parents contains an adjacency map of all nodes
     g[start_node] = 0
     parents[start_node] = start_node
-
     while len(open_set) > 0:
         n = None # n is node refering
         for v in open_set:
             if n == None or g[v] + heuristic(v) < g[n] + heuristic(n):
                 n = v
-
         if n == stop_node or Graph_nodes[n] == None:
             pass
         else:
@@ -28,11 +26,9 @@ def aStarAlgo(start_node, stop_node):
                     if m in closed_set:
                         closed_set.remove(m)
                         open_set.add(m)
-
         if n == None:
             print('Path does not exist!')
             return None
-
         if n == stop_node:
             path = []
             while parents[n] != n:
@@ -42,19 +38,15 @@ def aStarAlgo(start_node, stop_node):
             path.reverse()
             print('Path found: {}'.format(path))
             return path
-
         open_set.remove(n)
         closed_set.add(n)
-
     print('Path does not exist!')
     return None
-
 def get_neighbors(v):
     if v in Graph_nodes:
         return Graph_nodes[v]
     else:
         return None
-
 def heuristic(n):
     H_dist = {
         'A': 10,
@@ -69,7 +61,6 @@ def heuristic(n):
         'J': 0 
     }
     return H_dist[n]
-
 Graph_nodes = {
     'A': [('B', 6), ('F', 3)],
     'B': [('C', 3), ('D', 2)],
@@ -81,5 +72,4 @@ Graph_nodes = {
     'H': [('I', 2)],
     'I': [('E', 5), ('J', 3)],
 }
-
 aStarAlgo('A', 'J')
