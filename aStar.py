@@ -3,7 +3,7 @@ def aStarAlgo(start_node, stop_node):
     closed_set = set()
     g = {} # store distance from starting node
     parents = {} # parents contains an adjacency map of all nodes
-    g[start_node] = 0
+    g[start_node] = 0 #shortest distance from starting node
     parents[start_node] = start_node
     while len(open_set) > 0:
         n = None # n is node refering
