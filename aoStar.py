@@ -33,49 +33,49 @@ class Graph:
 
     def computeMinimumCostChildNodes(self, v):
         minimumCost = 0
-        costToChildNodeListDict = {}
-        costToChildNodeListDict[minimumCost] = []
+        costToChildNodeListDict = {} # to store cost of reaching child node
+        costToChildNodeListDict[minimumCost] = [] #cost to child node dict initialize empty list 
         flag = True
-        for nodeInfoTupleList in self.getNeighbors(v):
+        for nodeInfoTupleList in self.getNeighbors(v): #get the neighbors if it has "and" nodes then two tuples will be got 
             cost = 0
-            nodeList = []
+            nodeList = [] #to store the list of nodes
             for c, weight in nodeInfoTupleList:
-                cost = cost + self.getHeuristicNodeValue(c) + weight
-                nodeList.append(c)
+                cost = cost + self.getHeuristicNodeValue(c) + weight #update cost with previous cost of and node with other and node if present
+                nodeList.append(c)#append the node
 
             if flag == True:
-                minimumCost = cost
+                minimumCost = cost #update minimum cost 
                 costToChildNodeListDict[minimumCost] = nodeList
-                flag = False
+                flag = False #so that next neighbor node will not come to this "if" loop
             else:
-                if minimumCost > cost:
+                if minimumCost > cost: #checks if previous minimum cost is greater then update it 
                     minimumCost = cost
-                    costToChildNodeListDict[minimumCost] = nodeList
+                    costToChildNodeListDict[minimumCost] = nodeList #update costtochild node dict
 
-        return minimumCost, costToChildNodeListDict[minimumCost]
+        return minimumCost, costToChildNodeListDict[minimumCost] 
 
     def aoStar(self, v, backTracking):
-        print("HEURISTIC VALUES :", self.H)
-        print("SOLUTION GRAPH :", self.solutionGraph)
-        print("PROCESSING NODE :", v)
+        print("HEURISTIC VALUES :", self.H) 
+        print("SOLUTION GRAPH :", self.solutionGraph) #graph after previous iteration
+        print("PROCESSING NODE :", v) #current processing node
         print("-----------------------------------------------------------------------------------------")
 
-        if self.getStatus(v) >= 0:
-            minimumCost, childNodeList = self.computeMinimumCostChildNodes(v)
-            self.setHeuristicNodeValue(v, minimumCost)
-            self.setStatus(v, len(childNodeList))
+        if self.getStatus(v) >= 0: #for last node it will be -1 so
+            minimumCost, childNodeList = self.computeMinimumCostChildNodes(v) # min cost and childnodelist of d for this eg for 1st iteration
+            self.setHeuristicNodeValue(v, minimumCost)#setting the 1st node value
+            self.setStatus(v, len(childNodeList))#setting the len of child node to status[v] ie for A in 1st iteration 
 
             solved = True
-            for childNode in childNodeList:
-                self.parent[childNode] = v
-                if self.getStatus(childNode) != -1:
-                    solved = solved & False
+            for childNode in childNodeList: #
+                self.parent[childNode] = v # set A as parent in 1st iteration
+                if self.getStatus(childNode) != -1: #if it is not last node
+                    solved = solved & False #set solved status to false
 
-            if solved == True:
-                self.setStatus(v, -1)
-                self.solutionGraph[v] = childNodeList
+            if solved == True: #if it is true then solved so 
+                self.setStatus(v, -1) # set the node status to -1 to show it is solved
+                self.solutionGraph[v] = childNodeList #update solution graph child node list
 
-            if v != self.start:
+            if v != self.start: #if node is not start node then call aostart algo for the node with its parent as argument 
                 self.aoStar(self.parent[v], True)
 
             if backTracking == False:

@@ -34,19 +34,17 @@ bout = np.random.uniform(size=(1, oln))
 # Training the neural network
 for i in range(e):
     # Forward pass
-    h1 = np.dot(X, wh)
-    h = h1 + bh
-    hla = sigmoid(h)
-    oi1 = np.dot(hla, wout)
-    oi = oi1 + bout
-    op = sigmoid(oi)
+    h1 = np.dot(X, wh)+bh
+    hla = sigmoid(h1)
+    oi1 = np.dot(hla, wout)+bout
+    op = sigmoid(oi1)
 
     # Backpropagation
     EO = y - op
     og = dersig(op)
     dop = EO * og
     EH = dop.dot(wout.T)
-    hg = dersig(hla)
+    hg = dersig(hla) 
     dhl = EH * hg
 
     # Update weights and biases

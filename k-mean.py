@@ -15,10 +15,10 @@ kmeans.fit(X)
 kmeans_labels = kmeans.labels_
 
 # Perform Gaussian Mixture Model (GMM) clustering
-scaler = preprocessing.StandardScaler()
-X_scaled = scaler.fit_transform(X)
+scaler = preprocessing.StandardScaler() #used for preprocessing the data.
+X_scaled = scaler.fit_transform(X) # 
 
-gmm = GaussianMixture(n_components=3)
+gmm = GaussianMixture(n_components=3) 
 gmm.fit(X_scaled)
 gmm_labels = gmm.predict(X_scaled)
 
